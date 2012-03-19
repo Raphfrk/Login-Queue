@@ -27,8 +27,8 @@ import java.util.logging.Logger;
 
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class LoginQueue extends JavaPlugin {
@@ -112,7 +112,7 @@ public class LoginQueue extends JavaPlugin {
 
 		pf.save();
 
-		getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this);
+		getServer().getPluginManager().registerEvent(PlayerLoginEvent.class, playerListener, EventPriority.NORMAL, playerListener, this);
 
 		if(sqlEnabled.get()) {
 			Connection conn = null;

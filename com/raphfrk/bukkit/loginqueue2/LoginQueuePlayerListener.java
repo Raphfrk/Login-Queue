@@ -3,17 +3,27 @@ package com.raphfrk.bukkit.loginqueue2;
 import java.util.Iterator;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventException;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
+import org.bukkit.plugin.EventExecutor;
 
 import com.raphfrk.bukkit.loginqueue2.LoginQueue.PlayerInfo;
 
-public class LoginQueuePlayerListener extends org.bukkit.event.player.PlayerListener {
+public class LoginQueuePlayerListener implements EventExecutor, Listener {
 
 	LoginQueue p;
 
 	LoginQueuePlayerListener(LoginQueue p) {
 		this.p = p;
+	}
+	
+	public void execute(Listener listener, Event event) throws EventException {
+		if (event instanceof PlayerLoginEvent && listener == this) {
+			this.onPlayerLogin((PlayerLoginEvent)event);
+		}
 	}
 
 	public void onPlayerLogin(PlayerLoginEvent event) {
